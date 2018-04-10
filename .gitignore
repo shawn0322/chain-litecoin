@@ -1,0 +1,12 @@
+*.iml
+*.ipr
+*.iws
+.idea
+.gradle
+out
+build
+log
+.DS_Store
+.gradletasknamecache
+.classpath
+bitcoin-blocks

@@ -1,0 +1,113 @@
+
+buildscript {
+    ext {
+        springBootVersion = '1.5.6.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        maven {
+            url uri('repo')
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'maven'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.tunion.chain.litecoin'
+version = '1.0.0-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    compile.exclude module: 'slf4j-nop'
+    compile.exclude module: 'logback-classic'
+}
+
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-devtools')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile 'org.springframework.boot:spring-boot-starter-log4j2'
+
+    compile 'com.alibaba:dubbo:2.5.7'
+    compile ('com.github.sgroschupf:zkclient:0.1')
+            {
+                exclude group: 'log4j'
+                exclude group: 'org.slf4j'
+            }
+    compile 'com.tunion.dubbo.chainrouter:chain-router:1.0.0-SNAPSHOT'
+    compile 'io.dubbo.springboot:spring-boot-starter-dubbo:1.0.0'
+
+    compile 'commons-pool:commons-pool:1.6'
+    compile 'org.apache.commons:commons-lang3:3.5'
+    compile 'commons-codec:commons-codec:1.10'
+    compile 'org.bouncycastle:bcprov-jdk15on:1.56'
+
+    compile 'com.madgag.spongycastle:core:1.58.0.0'
+    compile 'com.google.protobuf:protobuf-java:2.6.1'
+
+    compile 'com.xingmantech.commons:xman-boot-loader:1.0.0-SNAPSHOT'
+    compile 'com.xingmantech.commons:xman-backend-common:1.0.0-SNAPSHOT'
+
+    compile files('lib/litecoinj-core-0.15-SNAPSHOT.jar')
+    //
+    compile group: 'com.lambdaworks', name: 'scrypt', version: '1.4.0'
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'junit:junit:4.12'
+}
+
+jar {
+    manifest {
+        attributes 'Build-Date': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+                'Built-By': System.getProperty('user.name'),
+                'Built-JDK': System.getProperty('java.version'),
+                'Built-OS': "${System.getProperty('os.name')}/${System.getProperty('os.version')}",
+                'Source-Compatibility': sourceCompatibility,
+                'Target-Compatibility': targetCompatibility,
+                'Rev-Revision': version,
+                'Git-Revision': 'git rev-parse HEAD'.execute().text.trim(),
+                'Git-Branch': 'git rev-parse --abbrev-ref HEAD'.execute().text.trim()
+    }
+}
+
+task deploy(dependsOn: jar) {
+
+    doLast {
+
+        delete {
+            "$buildDir/deploy_server"
+        }
+
+        copy {
+            from "$buildDir/libs"
+            from configurations.runtime
+            into "$buildDir/deploy_server/lib"
+        }
+
+        copy {
+            from('src/main/resources') {
+                exclude '**/**/static'
+                exclude '**/**/banner.txt'
+            }
+            into "$buildDir/deploy_server/classes"
+        }
+
+        copy {
+            from 'server'
+            into "$buildDir/deploy_server"
+        }
+
+    }
+
+}
+
