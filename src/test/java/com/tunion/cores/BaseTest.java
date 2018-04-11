@@ -2,8 +2,8 @@ package com.tunion.cores;
 
 import com.tunion.SpringBootStartApplication;
 import com.tunion.cores.utils.ISOUtil;
+import org.bitcoinj.core.ECKey;
 import org.junit.runner.RunWith;
-import org.litecoinj.core.ECKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spongycastle.math.ec.ECPoint;

@@ -39,28 +39,20 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-log4j2'
 
     compile 'com.alibaba:dubbo:2.5.7'
-    compile ('com.github.sgroschupf:zkclient:0.1')
-            {
-                exclude group: 'log4j'
-                exclude group: 'org.slf4j'
-            }
+    compile 'com.github.sgroschupf:zkclient:0.1'
     compile 'com.tunion.dubbo.chainrouter:chain-router:1.0.0-SNAPSHOT'
-    compile 'io.dubbo.springboot:spring-boot-starter-dubbo:1.0.0'
 
     compile 'commons-pool:commons-pool:1.6'
     compile 'org.apache.commons:commons-lang3:3.5'
     compile 'commons-codec:commons-codec:1.10'
     compile 'org.bouncycastle:bcprov-jdk15on:1.56'
 
+    compile files('lib/bitcoinj-core-0.15-SNAPSHOT.jar')
+    compile group: 'com.lambdaworks', name: 'scrypt', version: '1.4.0'
+
     compile 'com.madgag.spongycastle:core:1.58.0.0'
     compile 'com.google.protobuf:protobuf-java:2.6.1'
-
-    compile 'com.xingmantech.commons:xman-boot-loader:1.0.0-SNAPSHOT'
-    compile 'com.xingmantech.commons:xman-backend-common:1.0.0-SNAPSHOT'
-
-    compile files('lib/litecoinj-core-0.15-SNAPSHOT.jar')
-    //
-    compile group: 'com.lambdaworks', name: 'scrypt', version: '1.4.0'
+    compile 'com.google.guava:guava:24.0-android'
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'junit:junit:4.12'
