@@ -34,25 +34,24 @@ configurations {
 
 
 dependencies {
+    compile files('lib/litecoinj-core-0.15-SNAPSHOT.jar')
+
     compile('org.springframework.boot:spring-boot-devtools')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile 'org.springframework.boot:spring-boot-starter-log4j2'
 
     compile 'com.alibaba:dubbo:2.5.7'
-    compile 'com.github.sgroschupf:zkclient:0.1'
+    compile 'io.dubbo.springboot:spring-boot-starter-dubbo:1.0.0'
     compile 'com.tunion.dubbo.chainrouter:chain-router:1.0.0-SNAPSHOT'
-
+    
     compile 'commons-pool:commons-pool:1.6'
     compile 'org.apache.commons:commons-lang3:3.5'
     compile 'commons-codec:commons-codec:1.10'
     compile 'org.bouncycastle:bcprov-jdk15on:1.56'
-
-    compile files('lib/bitcoinj-core-0.15-SNAPSHOT.jar')
-    compile group: 'com.lambdaworks', name: 'scrypt', version: '1.4.0'
-
     compile 'com.madgag.spongycastle:core:1.58.0.0'
     compile 'com.google.protobuf:protobuf-java:2.6.1'
-    compile 'com.google.guava:guava:24.0-android'
+    compile 'com.google.guava:guava:19.0'
+    compile group: 'com.lambdaworks', name: 'scrypt', version: '1.4.0'
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'junit:junit:4.12'
